@@ -1,6 +1,7 @@
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.auth.Auth
 
+
 object SupabaseProvider {
 
     val client = createSupabaseClient(
@@ -10,6 +11,7 @@ object SupabaseProvider {
         install(Auth) {
             scheme = "com.xil.astra"
             host = "login-callback"
+
         }
     }
 }

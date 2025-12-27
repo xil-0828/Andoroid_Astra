@@ -8,9 +8,7 @@ import com.xil.astra.data.auth.AuthRepository
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
-    onLoginSuccess: () -> Unit = {}
-) {
+fun LoginScreen() {
     val scope = rememberCoroutineScope()
     val authRepository = AuthRepository()
 
@@ -18,10 +16,10 @@ fun LoginScreen(
         onClick = {
             scope.launch {
                 authRepository.loginWithGoogle()
-                onLoginSuccess()
             }
         }
     ) {
         Text("Googleでログイン")
     }
 }
+
