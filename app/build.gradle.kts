@@ -63,7 +63,13 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:compose-auth-ui")
 
     // Ktor（明示）
-    implementation(platform("io.ktor:ktor-bom:2.3.12"))
+    // ⭐ Ktor BOM（必須）
+    implementation(platform("io.ktor:ktor-bom:3.2.3"))
+    implementation("io.ktor:ktor-client-core")
     implementation("io.ktor:ktor-client-okhttp")
+    implementation("io.ktor:ktor-client-content-negotiation")
+    implementation("io.ktor:ktor-client-websockets")
+    implementation("io.ktor:ktor-client-logging")
+
 
 }

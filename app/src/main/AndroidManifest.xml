@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="astra"
+                    android:scheme="com.xil.astra"
                     android:host="login-callback" />
             </intent-filter>
 

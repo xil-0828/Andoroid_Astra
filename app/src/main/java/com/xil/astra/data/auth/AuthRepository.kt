@@ -1,6 +1,5 @@
 package com.xil.astra.data.auth
 
-import com.xil.astra.data.supabase.SupabaseProvider
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.Google
 
