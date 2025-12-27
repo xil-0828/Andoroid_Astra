@@ -1,26 +1,23 @@
+package com.xil.astra.ui.screen
+
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import com.xil.astra.ui.screen.LoginScreen
-import io.github.jan.supabase.auth.user.UserSession
 import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.user.UserSession
+import kotlinx.coroutines.flow.collectLatest
+
 @Composable
 fun RootScreen() {
-    val lifecycleOwner = LocalLifecycleOwner.current
+
     var session by remember { mutableStateOf<UserSession?>(null) }
 
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                session = SupabaseProvider.client.auth.currentSessionOrNull()
-            }
-        }
+    LaunchedEffect(Unit) {
+        session = SupabaseProvider.client.auth.currentSessionOrNull()
 
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
+        SupabaseProvider.client.auth.sessionStatus
+            .collectLatest {
+                session =
+                    SupabaseProvider.client.auth.currentSessionOrNull()
+            }
     }
 
     if (session == null) {

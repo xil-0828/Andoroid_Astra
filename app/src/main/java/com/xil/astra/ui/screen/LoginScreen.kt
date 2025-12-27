@@ -2,24 +2,31 @@ package com.xil.astra.ui.screen
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
-import com.xil.astra.data.auth.AuthRepository
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import com.xil.astra.data.auth.AuthManager
+import com.xil.astra.data.auth.AuthResult
 import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen() {
+
+    val context = LocalContext.current
+    val authManager = remember { AuthManager(context) }
     val scope = rememberCoroutineScope()
-    val authRepository = AuthRepository()
 
     Button(
         onClick = {
             scope.launch {
-                authRepository.loginWithGoogle()
+                authManager.signInWithGoogle()
+                    .collect { result ->
+                        if (result is AuthResult.Error) {
+                            println("Login failed: ${result.message}")
+                        }
+                    }
             }
         }
     ) {
         Text("Googleでログイン")
     }
 }
-

@@ -1,9 +1,9 @@
 package com.xil.astra
 
-import RootScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.xil.astra.ui.screen.RootScreen
 import com.xil.astra.ui.theme.AstraTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,12 +13,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AstraTheme {
-
-
                 RootScreen()
-
             }
-
         }
     }
 }
