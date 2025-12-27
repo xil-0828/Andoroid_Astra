@@ -25,25 +25,12 @@ class AuthManager(
 
     private val credentialManager = CredentialManager.create(context)
 
-    // nonce（必須）
-    private fun createNonce(): String {
-        val rawNonce = UUID.randomUUID().toString()
-        val digest = MessageDigest
-            .getInstance("SHA-256")
-            .digest(rawNonce.toByteArray())
-
-        return digest.joinToString("") { "%02x".format(it) }
-    }
-
     fun signInWithGoogle(): Flow<AuthResult> = flow {
         try {
-            val nonce = createNonce()
-
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setServerClientId(
                     "744793862440-rf3qn1bh3pn6triu3e2kio1fdm9s47ja.apps.googleusercontent.com"
-                )
-                .setNonce(nonce)
+                ) // ← Web Client ID
                 .setFilterByAuthorizedAccounts(false)
                 .build()
 
@@ -56,14 +43,12 @@ class AuthManager(
                 request = request
             )
 
-            val googleCredential = GoogleIdTokenCredential
-                .createFrom(result.credential.data)
-
-            val idToken = googleCredential.idToken
+            val googleCredential =
+                GoogleIdTokenCredential.createFrom(result.credential.data)
 
             SupabaseProvider.client.auth.signInWith(IDToken) {
                 provider = Google
-                this.idToken = idToken
+                idToken = googleCredential.idToken
             }
 
             emit(AuthResult.Success)

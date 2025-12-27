@@ -1,5 +1,6 @@
 package com.xil.astra.ui.screen
 
+import android.util.Log
 import androidx.compose.runtime.*
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.user.UserSession
@@ -17,6 +18,7 @@ fun RootScreen() {
             .collectLatest {
                 session =
                     SupabaseProvider.client.auth.currentSessionOrNull()
+
             }
     }
 
