@@ -58,11 +58,12 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(platform("io.github.jan-tennert.supabase:bom:3.2.6"))
-
     implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("io.github.jan-tennert.supabase:compose-auth")
     implementation("io.github.jan-tennert.supabase:compose-auth-ui")
 
+    // Ktor（明示）
+    implementation(platform("io.ktor:ktor-bom:2.3.12"))
     implementation("io.ktor:ktor-client-okhttp")
 
 }
